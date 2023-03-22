@@ -1,0 +1,9 @@
+.botonEscaneo{
+    margin-top: -50%;
+    border-radius: 200px;
+    border: solid black 2px;
+    margin: 0 auto;
+    padding: 5%;
+    max-width: 38%;
+    min-width: 20%;
+  }

@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "lectorqr-ecd9d"
+  },
+  "targets": {
+    "lectorqr-ecd9d": {
+      "hosting": {
+        "LectorQR": [
+          "lectorqr-ecd9d"
+        ]
+      }
+    }
+  }
+}

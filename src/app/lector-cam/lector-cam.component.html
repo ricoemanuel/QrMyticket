@@ -1,0 +1,27 @@
+<div class="content" role="main">
+  <input type="hidden" #selection>
+  <p>{{DefQr}}</p>
+  <div class="" [ngSwitch]="selection.value">
+    <pre *ngSwitchDefault>
+        <div>
+          <qr-scanner
+        [debug]="false"
+        [canvasWidth]="1080" 
+        [canvasHeight]="720" 
+        [stopAfterScan]="false" 
+        [updateTime]="500"> holi
+        </qr-scanner>
+        </div>
+      </pre>
+      
+  </div>
+  <div class="botonEscaneo" (click)="enviarQR()">
+    
+      <img class=" mx-auto" src="../assets/camara.png" width="100">
+    
+  </div>
+  
+  <!-- Links -->
+  
+
+</div>
