@@ -15,12 +15,18 @@ import {MatListModule} from '@angular/material/list';
 import {MatIconModule} from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { LectorCamComponent } from './lector-cam/lector-cam.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { LectorCSVComponent } from './lector-csv/lector-csv.component';
+import { LectorbdComponent } from './lectorbd/lectorbd.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     FormularioEntradaComponent,
     MenuHorizontalComponent,
     LectorCamComponent,
+    LectorCSVComponent,
+    LectorbdComponent,
     
     
   ],
@@ -32,6 +38,7 @@ import { LectorCamComponent } from './lector-cam/lector-cam.component';
     MatIconModule,
     MatSidenavModule,
     MatListModule,
+    ReactiveFormsModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),

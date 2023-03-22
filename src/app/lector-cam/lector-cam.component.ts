@@ -1,5 +1,6 @@
 import { Component,ViewChild, ViewEncapsulation, OnInit,AfterViewInit } from '@angular/core';
 import {QrScannerComponent} from 'angular2-qrscanner';
+import { LectorService } from '../servicios/lector.service';
 
 @Component({
   selector: 'app-lector-cam',
@@ -10,9 +11,13 @@ import {QrScannerComponent} from 'angular2-qrscanner';
 export class LectorCamComponent {
   title='lectorqr';
   Qr="";
-  DefQr="";
+  DefQr=[];
+  constructor(
+    private lectorService:LectorService
+  ){}
   enviarQR(){
-    this.DefQr=this.Qr
+    
+    console.log(this.lectorService.getEntrada(this.Qr.split(",")[1]))
   }
 
   @ViewChild(QrScannerComponent, { static: false })

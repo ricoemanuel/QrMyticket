@@ -1,0 +1,41 @@
+
+
+<div class="csv-result-table delimitar">
+    
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th></th>
+                <th>correo</th>
+                <th>evento</th>
+                <th>número personal</th>
+                <th>estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let consulta of consultas;let i = index;">
+
+                <td>
+                    <div class="form-check">
+                        <a (click)="editar(consulta)"><img  src="../../assets/editar.png" width="20"></a>
+                    </div>
+                </td>
+                <td>
+                    <span>{{consulta.correo}}</span>
+                </td>
+                <td>
+                    <span>{{consulta.codigoEvento}}</span>
+                </td>
+                <td>
+                    <span>{{consulta.codigoPersonal}}</span>
+                </td>
+                <td>
+                    <span>{{consulta.estado}}</span>
+                </td>
+
+
+            </tr>
+        </tbody>
+    </table>
+
+</div>

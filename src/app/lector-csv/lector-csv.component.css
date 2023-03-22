@@ -1,0 +1,10 @@
+.center{
+    margin: 0 auto;
+   
+   
+}
+.delimitar{
+    overflow: scroll;
+    
+    max-height: 500px;
+}

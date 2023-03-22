@@ -2,24 +2,19 @@
 <div class="mx-auto" style="width: 200px;">
   <h1>Registro manual de entrada</h1>
 </div>
-<form class="col-md-4 mx-auto formulario">
-  <div class="form-group ">
-    <label for="exampleInputEmail1">Correo electrónico*</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Ingrese correo">
+<form [formGroup]="formulario" (ngSubmit)="onSubmit()" class="formulario">
+  <div class="mb-3">
+      <label class="form-label">Correo*</label>
+      <input type="email" class="form-control" formControlName="correo" placeholder="correo">
   </div>
-  <br>
-  <div class="form-group ">
-    <label for="exampleInputEmail1">Código del evento*</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Ingrese código">
+  <div class="mb-3">
+      <label class="form-label">Código del evento*</label>
+      <input type="text" class="form-control" formControlName="codigoEvento" placeholder="código evento">
   </div>
-  <br>
-  <div class="form-group ">
-    <label for="exampleInputEmail1">Código de la persona*</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Ingrese Código personal">
+  <div class="mb-3">
+      <label class="form-label">Código de la persona*</label>
+      <input type="text" class="form-control" formControlName="codigoPersona" placeholder="código personal">
   </div>
-  <br>
-  <div class="mx-auto">
-    <button class="btn btn-primary mx-auto">Registrar</button>
-  </div>
-
+  
+  <input type="submit" value="Enviar" class="btn btn-primary">
 </form>
