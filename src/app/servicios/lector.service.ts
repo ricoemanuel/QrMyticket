@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { collection, Firestore, addDoc,getDocs, collectionData, getDoc, doc, query, where} from '@angular/fire/firestore';
+import { collection, Firestore, addDoc,getDocs, collectionData, getDoc, doc, query, where,setDoc} from '@angular/fire/firestore';
 import Entrada from '../interfaces/place.interface';
 
 @Injectable({
@@ -18,10 +18,14 @@ export class LectorService {
     const entradaRef=collection(this.firestore,"entradas")
     return collectionData(entradaRef,{idField:'id'})
   }
-  getEntrada(codigoPerona: any){
+  getEntrada(correo: any){
     const entradaRef=collection(this.firestore,`entradas`)
-    return query(entradaRef,where("codigoPersona","==",codigoPerona))
+    return getDocs(query(entradaRef,where("correo","==",correo)))
     
+  }
+  editEntrada(entrada:any,id:string){
+    const entradaRef=doc(this.firestore,"entradas",id)
+    setDoc(entradaRef,entrada)
   }
 
 }

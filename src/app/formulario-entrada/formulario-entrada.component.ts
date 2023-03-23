@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup,FormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
 import { LectorService } from '../servicios/lector.service';
 
 @Component({
@@ -23,6 +24,11 @@ export class FormularioEntradaComponent {
   async onSubmit(){
   
     const response=await this.lectorService.addEntrada(this.formulario.value)
-    
+    Swal.fire({
+      icon: 'success',
+      title: 'Entrada registrada',
+      showConfirmButton: false,
+      timer: 1500
+    })
   }
 }

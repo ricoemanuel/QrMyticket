@@ -1,9 +1,17 @@
 .botonEscaneo{
-    margin-top: -50%;
+    margin-top: -70%;
     border-radius: 200px;
     border: solid black 2px;
     margin: 0 auto;
     padding: 5%;
-    max-width: 38%;
-    min-width: 20%;
+    max-width: fit-content;
+    min-width: fit-content;
+  }
+  .camara{
+    max-width: 70%;
+    
+    margin: 0 auto;
+  }
+  .boton{
+    margin: 0 auto;
   }
