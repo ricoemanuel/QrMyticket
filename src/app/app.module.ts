@@ -18,7 +18,9 @@ import { LectorCamComponent } from './lector-cam/lector-cam.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LectorCSVComponent } from './lector-csv/lector-csv.component';
 import { LectorbdComponent } from './lectorbd/lectorbd.component';
-
+import { LoginComponent } from './login/login.component';
+import { MainComponent } from './main/main.component';
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,6 +29,8 @@ import { LectorbdComponent } from './lectorbd/lectorbd.component';
     LectorCamComponent,
     LectorCSVComponent,
     LectorbdComponent,
+    LoginComponent,
+    MainComponent,
     
     
   ],
@@ -39,6 +43,7 @@ import { LectorbdComponent } from './lectorbd/lectorbd.component';
     MatSidenavModule,
     MatListModule,
     ReactiveFormsModule,
+    FormsModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),

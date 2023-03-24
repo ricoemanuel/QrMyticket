@@ -1,11 +1,14 @@
 import {ChangeDetectorRef, Component, OnDestroy} from '@angular/core';
 import {MediaMatcher} from '@angular/cdk/layout';
+import { LoginService } from '../login.service';
 @Component({
   selector: 'app-menu-horizontal',
   templateUrl: './menu-horizontal.component.html',
   styleUrls: ['./menu-horizontal.component.css']
 })
 export class MenuHorizontalComponent implements OnDestroy{
+  
+  usuario=this.login.userObserver()?.uid
   mobileQuery: MediaQueryList;
 
   fillerNav = Array.from({length: 50}, (_, i) => `Nav Item ${i + 1}`);
@@ -22,7 +25,7 @@ export class MenuHorizontalComponent implements OnDestroy{
 
   private _mobileQueryListener: () => void;
 
-  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
+  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private login:LoginService) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
@@ -33,4 +36,7 @@ export class MenuHorizontalComponent implements OnDestroy{
   }
 
   shouldRun = true;
+  cerrasesion(){
+    this.login.cerrarSesion()
+  }
 }
