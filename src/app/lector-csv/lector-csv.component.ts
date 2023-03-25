@@ -36,6 +36,7 @@ export class LectorCSVComponent {
       });
   }
   async registrar() {
+    
     if (this.csvRecords.length > 0 && this.csvRecords != undefined) {
       Swal.fire({
         title: 'Guardando entradas...',
@@ -46,15 +47,16 @@ export class LectorCSVComponent {
         },
         
       })
-      for (let i = 0; i < this.csvRecords.length; i++) {
-        await this.lectorService.addEntrada(this.csvRecords[i])
-      }
+      await this.csvRecords.forEach(async (element: any) => {
+        await this.lectorService.addEntrada(element)
+      })
       Swal.fire({
         icon: 'success',
         title: 'Entradas registradas',
         showConfirmButton: false,
         timer: 1500
       })
+      
     }
   }
 

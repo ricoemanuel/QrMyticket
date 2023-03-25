@@ -12,6 +12,7 @@ const routes: Routes = [
   {path:'registro',component:FormularioEntradaComponent},
   {path:'ingresocsv',component:LectorCSVComponent},
   {path:'entradas',component:LectorbdComponent},
+  { path: '',   redirectTo: '/lector', pathMatch: 'full' }
   
 ];
 
@@ -19,4 +20,6 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+  
+ }

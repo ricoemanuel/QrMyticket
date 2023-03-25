@@ -21,6 +21,9 @@ import { LectorbdComponent } from './lectorbd/lectorbd.component';
 import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component';
 import { FormsModule } from '@angular/forms';
+import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,6 +46,7 @@ import { FormsModule } from '@angular/forms';
     MatSidenavModule,
     MatListModule,
     ReactiveFormsModule,
+    NgxScannerQrcodeModule,
     FormsModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),

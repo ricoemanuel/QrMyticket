@@ -13,7 +13,7 @@ export class LoginService {
     return signInWithEmailAndPassword(this.auth,email,password)
   }
   userObserver(){
-    let usuario=this.authf.currentUser
+    let usuario=this.auth.currentUser
     return usuario
   }
   cerrarSesion(){

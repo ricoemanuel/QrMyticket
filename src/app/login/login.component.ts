@@ -16,6 +16,7 @@ export class LoginComponent {
     let email=this.correo
     let password=this.contrasena
     await this.loginservice.login({email,password})
-    
+    localStorage.setItem("login","true")
+    window.location.reload()
   }
 }

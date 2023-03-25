@@ -1,28 +1,16 @@
-<div class="content" role="main">
-  <input type="hidden" #selection>
-  
-  <div  [ngSwitch]="selection.value">
-    <pre *ngSwitchDefault>
-        <div class="camara">
-          <qr-scanner
-          
-        [debug]="false"
-        [canvasWidth]="1080" 
-        [canvasHeight]="720" 
-        [stopAfterScan]="false" 
-        [updateTime]="500">
-        </qr-scanner>
-        </div>
-      </pre>
-      <div class="botonEscaneo" (click)="enviarQR()">
+
+
+
+  <div class="camara">
+    <select [ngModel]="null" (ngModelChange)="action.playDevice($event)" class="form-select form-select-sm">
+      <option [value]="null" selected>Select device</option>
+      <option *ngFor="let c of action.devices.value; let i = index" [ngValue]="c.deviceId" [selected]="i == action.deviceActive">{{c.label}}</option>
+    </select>
+    <ngx-scanner-qrcode #action="scanner"></ngx-scanner-qrcode>
     
-        <img class="boton" src="../assets/camara.png" width="100">
-      
-    </div>
+  </div>
+  <div class="botonEscaneo">
+    <img width="100" src="../../assets/camara.png" (click)="enviarQR()">
   </div>
   
 
-  <!-- Links -->
-  
-
-</div>

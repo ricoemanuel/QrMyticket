@@ -1,8 +1,7 @@
-<div ng-if="logged!=null">
+<div *ngIf="logged">
     <app-menu-horizontal></app-menu-horizontal>
-    
 </div>
-<div ng-if="logged==null">
+<div *ngIf="!logged">
     <app-login></app-login>
 </div>
 

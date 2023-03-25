@@ -8,7 +8,7 @@ import { LoginService } from '../login.service';
 })
 export class MenuHorizontalComponent implements OnDestroy{
   
-  usuario=this.login.userObserver()?.uid
+  
   mobileQuery: MediaQueryList;
 
   fillerNav = Array.from({length: 50}, (_, i) => `Nav Item ${i + 1}`);
@@ -38,5 +38,7 @@ export class MenuHorizontalComponent implements OnDestroy{
   shouldRun = true;
   cerrasesion(){
     this.login.cerrarSesion()
+    localStorage.setItem("login","false")
+    window.location.reload()
   }
 }

@@ -8,10 +8,10 @@
     min-width: fit-content;
   }
   .camara{
-    max-width: 70%;
-    
+    max-width: 450px;
+    justify-content: center;
     margin: 0 auto;
   }
-  .boton{
-    margin: 0 auto;
-  }
+  
+  
+ 

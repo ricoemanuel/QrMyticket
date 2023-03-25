@@ -1,25 +1,46 @@
 import { Component, ViewChild, ViewEncapsulation, OnInit, AfterViewInit } from '@angular/core';
-import { QrScannerComponent } from 'angular2-qrscanner';
 import { elementAt } from 'rxjs';
 import Swal from 'sweetalert2';
 import { LectorService } from '../servicios/lector.service';
-
+import { NgxScannerQrcodeComponent,ScannerQRCodeDevice } from 'ngx-scanner-qrcode';
 @Component({
   selector: 'app-lector-cam',
   templateUrl: './lector-cam.component.html',
   styleUrls: ['./lector-cam.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class LectorCamComponent {
+export class LectorCamComponent implements AfterViewInit{
+  @ViewChild(NgxScannerQrcodeComponent, { static: false })
+  qrScannerComponent!: NgxScannerQrcodeComponent;
+  
   title = 'lectorqr';
-  Qr = "";
-
+  
+  valor=""
+  public videoDevices: MediaDeviceInfo[] = [];
   constructor(
     private lectorService: LectorService
   ) { }
+  async ngAfterViewInit(){
+    this.iniciar()
+    navigator.mediaDevices.enumerateDevices()
+      .then(devices => {
+        this.videoDevices = devices.filter(device => device.kind === 'videoinput');
+        console.log(this.qrScannerComponent.constraints)
+        if(this.videoDevices.length>1){
+          this.cambiarCam()
+        }
+      })
+      .catch(error => {
+        console.error('Error al obtener los dispositivos:', error);
+      });
+  }
+  
   async enviarQR() {
     try {
-      let registro = await this.lectorService.getEntrada(this.Qr.split(",")[2])
+      this.valor=this.qrScannerComponent.data.value[0].value
+      console.log(this.valor.split(",")[2])
+      let registro = await this.lectorService.getEntrada(this.valor.split(",")[2])
+      
       if (registro.size == 1) {
         registro.forEach(element => {
           let id = element.id
@@ -36,7 +57,7 @@ export class LectorCamComponent {
           } else {
             Swal.fire({
               icon: 'error',
-              title: 'No puede seguir',
+              title: 'No puede seguir, boleta usada',
               showConfirmButton: false,
               timer: 1500
             })
@@ -67,7 +88,7 @@ export class LectorCamComponent {
         if (entrada) {
           Swal.fire({
             icon: 'error',
-            title: 'No puede seguir',
+            title: 'No puede seguir, boleta usada',
             showConfirmButton: false,
             timer: 1500
           })
@@ -76,7 +97,7 @@ export class LectorCamComponent {
       } else {
         Swal.fire({
           icon: 'error',
-          title: 'No puede seguir',
+          title: 'No puede seguir, boleta usada',
           showConfirmButton: false,
           timer: 1500
         })
@@ -84,7 +105,7 @@ export class LectorCamComponent {
     } catch (error) {
       Swal.fire({
         icon: 'error',
-        title: 'Ha ocurrido un error, no puede seguir',
+        title: 'Ha ocurrido un error, este QR no esta en la base de datos',
         showConfirmButton: false,
         timer: 3000
       })
@@ -92,36 +113,13 @@ export class LectorCamComponent {
 
 
   }
-
-  @ViewChild(QrScannerComponent, { static: false })
-  qrScannerComponent!: QrScannerComponent;
-
-  ngAfterViewInit() {
-    this.qrScannerComponent.getMediaDevices().then(devices => {
-      const videoDevices: MediaDeviceInfo[] = [];
-      for (const device of devices) {
-        if (device.kind.toString() === 'videoinput') {
-          videoDevices.push(device);
-        }
-      }
-      if (videoDevices.length > 0) {
-        let choosenDev;
-        for (const dev of videoDevices) {
-          if (dev.label.includes('front')) {
-            choosenDev = dev;
-            break;
-          }
-        }
-        if (choosenDev) {
-          this.qrScannerComponent.chooseCamera.next(choosenDev);
-        } else {
-          this.qrScannerComponent.chooseCamera.next(videoDevices[0]);
-        }
-      }
-    });
-
-    this.qrScannerComponent.capturedQr.subscribe(result => {
-      this.Qr = result
-    });
+  
+  
+  iniciar(){
+    this.qrScannerComponent.start()
   }
+  cambiarCam(){
+    
+  }
+  
 }
