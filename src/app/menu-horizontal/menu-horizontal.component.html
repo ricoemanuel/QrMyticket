@@ -2,6 +2,7 @@
   <mat-toolbar color="primary" class="example-toolbar">
     <a mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></a>
     <h1 class="example-app-name">MyTicket</h1>
+    <p> - {{perfil}}</p>
   </mat-toolbar>
 
   <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
@@ -9,10 +10,11 @@
       fixedTopGap="56">
       <mat-nav-list>
         <a (click)="snav.toggle()"><a mat-list-item routerLink="/lector">Escanear boletas</a></a>
-        <a (click)="snav.toggle()"><a mat-list-item routerLink="/registro">Registrar boletas</a></a>
-        <a (click)="snav.toggle()"><a mat-list-item routerLink="/ingresocsv">Registrar CSV</a></a>
-        <a (click)="snav.toggle()"><a mat-list-item routerLink="/entradas">Ver entradas</a></a>
-        <a (click)="cerrasesion()"><a mat-list-item>Cerrar Sesion</a></a>
+        <a *ngIf="entradas" (click)="snav.toggle()"><a mat-list-item routerLink="/registro">Registrar boletas</a></a>
+        <a *ngIf="entradas" (click)="snav.toggle()"><a mat-list-item routerLink="/ingresocsv">Registrar CSV</a></a>
+        <a *ngIf="entradas" (click)="snav.toggle()"><a mat-list-item routerLink="/entradas">Ver entradas</a></a>
+        <a (click)="snav.toggle()"><a mat-list-item routerLink="/reportes">Generar reportes</a></a>
+        <a  (click)="cerrasesion()"><a mat-list-item>Cerrar Sesion</a></a>
       </mat-nav-list>
     </mat-sidenav>
 

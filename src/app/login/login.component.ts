@@ -15,8 +15,10 @@ export class LoginComponent {
   async iniciar(){
     let email=this.correo
     let password=this.contrasena
-    await this.loginservice.login({email,password})
+    let usuario=await this.loginservice.login({email,password})
     localStorage.setItem("login","true")
+    localStorage.setItem("user",usuario.user.uid)
     window.location.reload()
+    
   }
 }

@@ -27,7 +27,7 @@ export class LectorCSVComponent {
     this.ngxCsvParser.parse(files[0], { header: this.header, delimiter: ',', encoding: 'utf8' })
       .pipe().subscribe({
         next: (result): void => {
-          console.log('Result', result);
+          
           this.csvRecords = result;
         },
         error: (error: NgxCSVParserError): void => {
@@ -47,15 +47,18 @@ export class LectorCSVComponent {
         },
         
       })
-      await this.csvRecords.forEach(async (element: any) => {
-        await this.lectorService.addEntrada(element)
-      })
-      Swal.fire({
-        icon: 'success',
-        title: 'Entradas registradas',
-        showConfirmButton: false,
-        timer: 1500
-      })
+      
+      for (let i = 0; i < this.csvRecords.length; i++) {
+        const element = this.csvRecords[i];
+        await this.lectorService.addEntrada(element,element["ticket"])
+      }
+        Swal.fire({
+          icon: 'success',
+          title: 'Entradas registradas',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      
       
     }
   }

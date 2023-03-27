@@ -17,10 +17,10 @@
     <thead>
       <tr>
         
+        <th>ticket id</th>
         <th>correo</th>
-        <th>evento</th>
-        <th>número personal</th>
-        
+        <th>nombre</th>
+        <th>zona</th>
       </tr>
     </thead>
     <tbody>
@@ -28,15 +28,17 @@
 
         
         <td>
+          <span>{{csvData.ticket}}</span>
+        </td>
+        <td>
           <span>{{csvData.correo}}</span>
         </td>
         <td>
-          <span>{{csvData.codigoEvento}}</span>
+          <span>{{csvData.nombre}}</span>
         </td>
         <td>
-          <span>{{csvData.codigoPersonal}}</span>
+          <span>{{csvData.zona}}</span>
         </td>
-        
 
       </tr>
     </tbody>

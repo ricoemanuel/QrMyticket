@@ -3,6 +3,8 @@ import { elementAt } from 'rxjs';
 import Swal from 'sweetalert2';
 import { LectorService } from '../servicios/lector.service';
 import { NgxScannerQrcodeComponent,ScannerQRCodeDevice } from 'ngx-scanner-qrcode';
+import { json } from 'stream/consumers';
+import { LoginService } from '../login.service';
 @Component({
   selector: 'app-lector-cam',
   templateUrl: './lector-cam.component.html',
@@ -18,14 +20,15 @@ export class LectorCamComponent implements AfterViewInit{
   valor=""
   public videoDevices: MediaDeviceInfo[] = [];
   constructor(
-    private lectorService: LectorService
+    private lectorService: LectorService,
+    private loginService: LoginService
   ) { }
   async ngAfterViewInit(){
     this.iniciar()
     navigator.mediaDevices.enumerateDevices()
       .then(devices => {
         this.videoDevices = devices.filter(device => device.kind === 'videoinput');
-        console.log(this.qrScannerComponent.constraints)
+        
         if(this.videoDevices.length>1){
           this.cambiarCam()
         }
@@ -34,7 +37,7 @@ export class LectorCamComponent implements AfterViewInit{
         console.error('Error al obtener los dispositivos:', error);
       });
   }
-  
+  /*
   async enviarQR() {
     try {
       this.valor=this.qrScannerComponent.data.value[0].value
@@ -113,8 +116,57 @@ export class LectorCamComponent implements AfterViewInit{
 
 
   }
-  
-  
+  */
+  async enviarQR() {
+    let usuario=await this.lectorService.getUsuarios(localStorage.getItem("user"))
+    let datos=usuario.data()
+    let perfil=""
+    if(datos!=undefined){
+      perfil=datos["nombre"]
+    }
+    this.valor=this.qrScannerComponent.data.value[0].value
+    const respuesta=await this.lectorService.getEntrada(JSON.parse(this.valor).ticket_item_id)
+    
+    if(respuesta.size>0){
+      respuesta.forEach(async entrada=>{
+        let datos=entrada.data()
+        if(datos["zona"]==perfil){
+          if(datos["estado"]){
+            datos["estado"]=false
+            await this.lectorService.editEntrada(datos,entrada.id)
+            Swal.fire({
+              icon: 'success',
+              title: `Bienvenid@, ${datos["nombre"]}`,
+              showConfirmButton: false,
+              timer: 1500
+            })
+          }else{
+            Swal.fire({
+              icon: 'error',
+              title: `Esta entrada ya ha sido usada`,
+              showConfirmButton: false,
+              timer: 1500
+            })
+          }
+        }else{
+          Swal.fire({
+            icon: 'error',
+            title: `Usted no pertenece a esta zona`,
+            showConfirmButton: false,
+            timer: 3000})
+        }
+        
+        
+      })
+    }else{
+      Swal.fire({
+        icon: 'error',
+        title: `Esta entrada no está registrada`,
+        showConfirmButton: false,
+        timer: 1500})
+    }
+    
+  }
   iniciar(){
     this.qrScannerComponent.start()
   }

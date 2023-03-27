@@ -16,6 +16,7 @@ export class LectorbdComponent implements OnInit {
   ngOnInit() {
     this.lectorService.getEntradas().subscribe(entradas=>{
         this.consultas=entradas
+        console.log(this.consultas)
     });
     
   }

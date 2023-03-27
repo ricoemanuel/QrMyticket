@@ -22,6 +22,7 @@ import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component';
 import { FormsModule } from '@angular/forms';
 import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
+import { ReportesComponent } from './reportes/reportes.component';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
     LectorbdComponent,
     LoginComponent,
     MainComponent,
+    ReportesComponent,
     
     
   ],

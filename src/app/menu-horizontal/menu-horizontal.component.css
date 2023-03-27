@@ -7,7 +7,9 @@
     left: 0;
     right: 0;
   }
-  
+  a{
+    text-decoration: none;
+  }
   .example-is-mobile .example-toolbar {
     position: fixed;
     /* Make sure the toolbar will stay on top of the content as it scrolls past. */

@@ -1,6 +1,7 @@
 export default interface Entrada{
-    id?:string;
+    ticket:string;
     correo:string;
     estado:boolean;
-    cantidadEntradas:number;
+    zona:string;
+    nombre:string;
 }

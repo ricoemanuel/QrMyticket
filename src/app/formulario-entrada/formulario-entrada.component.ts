@@ -22,13 +22,13 @@ export class FormularioEntradaComponent {
     })
   }
   async onSubmit(){
-  
+  /*
     const response=await this.lectorService.addEntrada(this.formulario.value)
     Swal.fire({
       icon: 'success',
       title: 'Entrada registrada',
       showConfirmButton: false,
       timer: 1500
-    })
+    })*/
   }
 }
