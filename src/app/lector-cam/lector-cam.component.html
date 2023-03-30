@@ -6,11 +6,12 @@
       <option [value]="null" selected>Select device</option>
       <option *ngFor="let c of action.devices.value; let i = index" [ngValue]="c.deviceId" [selected]="i == action.deviceActive">{{c.label}}</option>
     </select>
-    <ngx-scanner-qrcode #action="scanner" class="video"></ngx-scanner-qrcode>
+    <ngx-scanner-qrcode
+      [config]="config"
+     (event)="onEvent($event)" 
+     #action="scanner" class="video"></ngx-scanner-qrcode>
     
   </div>
-  <div class="botonEscaneo">
-    <img width="50" src="../../assets/camara.png" (click)="enviarQR()">
-  </div>
+  
   
 

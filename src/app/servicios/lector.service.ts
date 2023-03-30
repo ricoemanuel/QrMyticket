@@ -43,5 +43,12 @@ export class LectorService {
     const entradaRef=collection(this.firestore,`entradas`)
     return getDocs(query(entradaRef,where("zona","==","meet"),where("estado","==",false)))
   }
-
+  getEntradasTrueVip(){
+    const entradaRef=collection(this.firestore,`entradas`)
+    return getDocs(query(entradaRef,where("zona","==","vip"),where("estado","==",true)))
+  }
+  getEntradasTrueGeneral(){
+    const entradaRef=collection(this.firestore,`entradas`)
+    return getDocs(query(entradaRef,where("zona","==","general"),where("estado","==",true)))
+  }
 }

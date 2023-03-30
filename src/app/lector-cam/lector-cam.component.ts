@@ -2,7 +2,7 @@ import { Component, ViewChild, ViewEncapsulation, OnInit, AfterViewInit } from '
 import { elementAt } from 'rxjs';
 import Swal from 'sweetalert2';
 import { LectorService } from '../servicios/lector.service';
-import { NgxScannerQrcodeComponent,ScannerQRCodeDevice } from 'ngx-scanner-qrcode';
+import { NgxScannerQrcodeComponent, ScannerQRCodeResult, ScannerQRCodeConfig } from 'ngx-scanner-qrcode';
 import { json } from 'stream/consumers';
 import { LoginService } from '../login.service';
 @Component({
@@ -11,167 +11,150 @@ import { LoginService } from '../login.service';
   styleUrls: ['./lector-cam.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class LectorCamComponent implements AfterViewInit{
+export class LectorCamComponent implements AfterViewInit {
   @ViewChild(NgxScannerQrcodeComponent, { static: false })
   qrScannerComponent!: NgxScannerQrcodeComponent;
-  
-  title = 'lectorqr';
-  
-  valor=""
+
+  public config: ScannerQRCodeConfig = {
+    // fps: 1000,
+    constraints: {
+      audio: false,
+      video: {
+        width: window.innerWidth,
+      },
+    },
+    isBeep: false,
+    // decode: 'macintosh',
+    deviceActive: 0, // Camera 1 active
+
+
+  };
+
+  valor = ""
   public videoDevices: MediaDeviceInfo[] = [];
   constructor(
     private lectorService: LectorService,
     private loginService: LoginService
   ) { }
-  async ngAfterViewInit(){
-    this.iniciar()
+  async ngAfterViewInit() {
+    this.qrScannerComponent.start()
+
     navigator.mediaDevices.enumerateDevices()
       .then(devices => {
         this.videoDevices = devices.filter(device => device.kind === 'videoinput');
-        
-        if(this.videoDevices.length>1){
-          this.cambiarCam()
-        }
+
+
       })
       .catch(error => {
         console.error('Error al obtener los dispositivos:', error);
       });
   }
-  /*
-  async enviarQR() {
-    try {
-      this.valor=this.qrScannerComponent.data.value[0].value
-      console.log(this.valor.split(",")[2])
-      let registro = await this.lectorService.getEntrada(this.valor.split(",")[2])
-      
-      if (registro.size == 1) {
-        registro.forEach(element => {
-          let id = element.id
-          let data = element.data()
-          if (data["estado"]) {
-            data["estado"] = false
-            this.lectorService.editEntrada(data, id)
+async enviarQR(boleta: string) {
+    let usuario = await this.lectorService.getUsuarios(localStorage.getItem("user"))
+    let datos = usuario.data()
+    let perfil = ""
+    let superU = false
+    if (datos != undefined) {
+      perfil = datos["nombre"]
+      if (perfil == "emanuel") {
+        superU = true
+      }
+    }
+    const respuesta = await this.lectorService.getEntrada(boleta)
+    if (respuesta.size > 0) {
+      respuesta.forEach(async entrada => {
+        let datos = entrada.data()
+        if (datos["zona"] == perfil || superU) {
+          if (datos["estado"]) {
+            datos["estado"] = false
             Swal.fire({
-              icon: 'success',
-              title: 'Puede seguir',
-              showConfirmButton: false,
-              timer: 1500
+              title: 'Desea pasar a la persona?',
+              html: `
+              Nombre: ${datos["nombre"]}
+              <br><br>
+              Zona: ${datos["zona"]}`,
+              showDenyButton: true,
+              showCancelButton: false,
+              confirmButtonText: 'pasar',
+              denyButtonText: `Cancelar`,
+              
+            }).then(async (result) => {
+              /* Read more about isConfirmed, isDenied below */
+              if (result.isConfirmed) {
+                await this.lectorService.editEntrada(datos, entrada.id)
+                Swal.fire('Bienvenid@', '', 'success')
+              } else if (result.isDenied) {
+                Swal.close()
+              }
             })
+
+
+
           } else {
             Swal.fire({
               icon: 'error',
-              title: 'No puede seguir, boleta usada',
-              showConfirmButton: false,
-              timer: 1500
-            })
-          }
-
-        })
-      } else if (registro.size > 1) {
-        let entrada = true
-
-        registro.forEach(element => {
-          if (entrada) {
-            let id = element.id
-            let data = element.data()
-            if (data["estado"]) {
-              data["estado"] = false
-              this.lectorService.editEntrada(data, id)
-              Swal.fire({
-                icon: 'success',
-                title: 'Puede seguir',
-                showConfirmButton: false,
-                timer: 1500
-              })
-              entrada = false
-            }
-          }
-
-        })
-        if (entrada) {
-          Swal.fire({
-            icon: 'error',
-            title: 'No puede seguir, boleta usada',
-            showConfirmButton: false,
-            timer: 1500
-          })
-        }
-
-      } else {
-        Swal.fire({
-          icon: 'error',
-          title: 'No puede seguir, boleta usada',
-          showConfirmButton: false,
-          timer: 1500
-        })
-      }
-    } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Ha ocurrido un error, este QR no esta en la base de datos',
-        showConfirmButton: false,
-        timer: 3000
-      })
-    }
-
-
-  }
-  */
-  async enviarQR() {
-    let usuario=await this.lectorService.getUsuarios(localStorage.getItem("user"))
-    let datos=usuario.data()
-    let perfil=""
-    if(datos!=undefined){
-      perfil=datos["nombre"]
-    }
-    this.valor=this.qrScannerComponent.data.value[0].value
-    const respuesta=await this.lectorService.getEntrada(JSON.parse(this.valor).ticket_item_id)
-    
-    if(respuesta.size>0){
-      respuesta.forEach(async entrada=>{
-        let datos=entrada.data()
-        if(datos["zona"]==perfil){
-          if(datos["estado"]){
-            datos["estado"]=false
-            await this.lectorService.editEntrada(datos,entrada.id)
-            Swal.fire({
-              icon: 'success',
-              title: `Bienvenid@, ${datos["nombre"]}`,
-              showConfirmButton: false,
-              timer: 1500
-            })
-          }else{
-            Swal.fire({
-              icon: 'error',
               title: `Esta entrada ya ha sido usada`,
-              showConfirmButton: false,
-              timer: 1500
+              
             })
           }
-        }else{
+        } else {
           Swal.fire({
             icon: 'error',
             title: `Usted no pertenece a esta zona`,
-            showConfirmButton: false,
-            timer: 3000})
+            
+          })
         }
-        
-        
+
+
       })
-    }else{
+    } else {
       Swal.fire({
         icon: 'error',
         title: `Esta entrada no está registrada`,
-        showConfirmButton: false,
-        timer: 1500})
+        
+      })
     }
-    
+
   }
-  iniciar(){
-    this.qrScannerComponent.start()
+  public onEvent(e: ScannerQRCodeResult[]): void {
+    this.valor = this.qrScannerComponent.data.value[0].value
+    this.qrScannerComponent.pause()
+    this.validarFormato()
   }
-  cambiarCam(){
-    
+  async validarFormato() {
+    Swal.fire({
+      title: 'Validando entrada...',
+      showConfirmButton: false,
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading()
+      },
+
+    })
+    if (this.valor[0].toString() == "/") {
+      await this.enviarQR(this.valor.split("/")[2])
+
+    }
+    else if (this.valor[0].toString() == "{") {
+      await this.enviarQR(JSON.parse(this.valor).ticket_item_id)
+
+
+    } else if (this.valor.split(",").length == 3) {
+      await this.enviarQR(this.valor.split(",")[0]) 
+
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: `Este formato no existe...`,
+        showConfirmButton: false,
+        timer: 3000,
+        didOpen: () => {
+          Swal.hideLoading()
+        }
+      })
+
+    }
+    this.valor = ""
+    this.qrScannerComponent.play()
   }
-  
 }

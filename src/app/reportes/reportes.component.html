@@ -18,4 +18,71 @@
             <td scope="col">{{total}}</td>
         </tbody>
     </table>
+    <div>
+      <button class="btn btn-primary" (click)="legalizar()">Legalizar boletas</button>
+      
+    </div>
+    <div class="asistentesGeneral">
+      <h1>Asistentes General</h1>
+      <table class="table table-striped"> 
+        <thead>
+          <tr>
+            <th scope="col">ID boleta</th>
+            <th scope="col">nombre</th>
+            <th scope="col">Cantidad</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="generalGlobal!=undefined">
+          <tr *ngFor="let t of generalGlobal">
+            <td scope="col">{{t["ticket"]}}</td>
+            <td scope="col">{{t["nombre"]}}</td>
+            <td scope="col">1</td>
+          </tr>
+            
+            
+        </tbody>
+      </table>
+    </div>
+    <div class="asistentesGeneral">
+      <h1>Asistentes vip</h1>
+      <table class="table table-striped"> 
+        <thead>
+          <tr>
+            <th scope="col">ID boleta</th>
+            <th scope="col">nombre</th>
+            <th scope="col">Cantidad</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="VipGlobal!=undefined">
+          <tr *ngFor="let t of VipGlobal">
+            <td scope="col">{{t["ticket"]}}</td>
+            <td scope="col">{{t["nombre"]}}</td>
+            <td scope="col">1</td>
+          </tr>
+            
+            
+        </tbody>
+      </table>
+    </div>
+    <div class="asistentesGeneral">
+      <h1>Asistentes Meet</h1>
+      <table class="table table-striped"> 
+        <thead>
+          <tr>
+            <th scope="col">ID boleta</th>
+            <th scope="col">nombre</th>
+            <th scope="col">Cantidad</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="MeetGlobal!=undefined">
+          <tr *ngFor="let t of MeetGlobal">
+            <td scope="col">{{t["ticket"]}}</td>
+            <td scope="col">{{t["nombre"]}}</td>
+            <td scope="col">1</td>
+          </tr>
+            
+            
+        </tbody>
+      </table>
+    </div>
 </div>
