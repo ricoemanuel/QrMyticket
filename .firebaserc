@@ -1,14 +1,14 @@
 {
-  "projects": {
-    "default": "lectorqr-ecd9d"
-  },
   "targets": {
-    "lectorqr-ecd9d": {
+    "lectorqrhalloween": {
       "hosting": {
-        "LectorQR": [
-          "lectorqr-ecd9d"
+        "lectorqrhalloween": [
+          "lectorqrhalloween"
         ]
       }
     }
+  },
+  "projects": {
+    "default": "lectorqrhalloween"
   }
 }

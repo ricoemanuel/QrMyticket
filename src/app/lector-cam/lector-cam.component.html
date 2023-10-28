@@ -10,8 +10,43 @@
       [config]="config"
      (event)="onEvent($event)" 
      #action="scanner" class="video"></ngx-scanner-qrcode>
-    
+     <div class="detalle">
+        <ng-container *ngFor="let key of keys">
+            <div class="mesa">
+
+                <div class="row">
+                    <div class="col title">Mesa {{key}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="ninos">Por favor, indica cuántos niños ingresarán.</label>
+                        <mat-form-field>
+                            <mat-label>Número de niños</mat-label>
+                            <input [(ngModel)]="ingresados[key]['ninos']" matInput type="number" min="0"
+                                max="11" id="ninos">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="adultos">Por favor, indica cuántos adultos ingresarán.</label>
+                        <mat-form-field>
+                            <mat-label>Número de adultos</mat-label>
+                            <input id="adultos" [(ngModel)]="ingresados[key]['adultos']" matInput type="number"
+                                min="1" max="12">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+
+        </ng-container>
+        
+        <div class="row" *ngIf="keys.length>0">
+            <div class="col centrar"><button class="btn btn-success" (click)="ingresar()">ingresar</button></div>
+            <div class="col centrar"><button class="btn btn-danger" (click)="cancelar()">cancelar</button></div>
+        </div>
+    </div>
   </div>
+
   
   
 

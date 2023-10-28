@@ -14,13 +14,18 @@ export class LectorService {
     const entradaRef=doc(this.firestore,"entradas",id)
     return setDoc(entradaRef,entrada)
   }
+  setFactura(entrada:any,id:string){
+    entrada.estado=true;
+    const entradaRef=doc(this.firestore,"facturas",id)
+    return setDoc(entradaRef,entrada)
+  }
   getEntradas(){
     const entradaRef=collection(this.firestore,"entradas")
     return collectionData(entradaRef,{idField:'id'})
   }
   getEntrada(ticket: any){
-    const entradaRef=collection(this.firestore,`entradas`)
-    return getDocs(query(entradaRef,where("ticket","==",ticket)))
+    const entradaRef=doc(this.firestore,"facturas",ticket)
+    return getDoc(entradaRef)
     
   }
   editEntrada(entrada:any,id:string){

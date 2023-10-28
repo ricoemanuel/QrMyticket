@@ -1,10 +1,11 @@
 export const environment = {
   firebase: {
-    projectId: 'lectorqr-ecd9d',
-    appId: '1:533423887353:web:e9539b56a97225bac46328',
-    storageBucket: 'lectorqr-ecd9d.appspot.com',
-    apiKey: 'AIzaSyDgcXsCCY9mEoHeTltHdu7cuYanfu-xHNA',
-    authDomain: 'lectorqr-ecd9d.firebaseapp.com',
-    messagingSenderId: '533423887353',
-    measurementId: 'G-9C2P8SY629',
+    apiKey: "AIzaSyDrmlLtmYc-pDGovvGvlJABEv4aDWgK_x8",
+    authDomain: "myticketeventos.firebaseapp.com",
+    databaseURL: "https://myticketeventos-default-rtdb.firebaseio.com",
+    projectId: "myticketeventos",
+    storageBucket: "myticketeventos.appspot.com",
+    messagingSenderId: "290015062564",
+    appId: "1:290015062564:web:d1770888888a05acca36952cc6b1",
+    measurementId: "G-932QCRPQWS"
   },};

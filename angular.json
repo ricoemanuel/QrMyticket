@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/lector-qr",
+            "outputPath": "dist/lectorqrhalloween",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -116,11 +116,14 @@
             "prerender": false,
             "ssr": false,
             "browserTarget": "LectorQR:build:production",
-            "firebaseProject": "lectorqr-ecd9d",
-            "firebaseHostingSite": "lectorqr-ecd9d"
+            "firebaseProject": "lectorqrhalloween",
+            "firebaseHostingSite": "lectorqrhalloween"
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "d370387b-5395-4677-abf1-8de7bc73d42d"
   }
 }

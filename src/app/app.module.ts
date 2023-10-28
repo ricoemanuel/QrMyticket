@@ -23,7 +23,7 @@ import { MainComponent } from './main/main.component';
 import { FormsModule } from '@angular/forms';
 import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
 import { ReportesComponent } from './reportes/reportes.component';
-
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -47,6 +47,7 @@ import { ReportesComponent } from './reportes/reportes.component';
     MatIconModule,
     MatSidenavModule,
     MatListModule,
+    MatInputModule,
     ReactiveFormsModule,
     NgxScannerQrcodeModule,
     FormsModule,
